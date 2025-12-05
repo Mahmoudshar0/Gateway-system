@@ -8,6 +8,9 @@ trait ViewTraineesHelper
     {
         $data = [];
 
+        // Get the list ID first to filter efficiently
+        $listId = $class->List($class->list)->id;
+
         // Build query with eager loading to prevent N+1 queries
         $query = $trainees->with([
             'list:id,list_title',
@@ -15,7 +18,9 @@ trait ViewTraineesHelper
             'trainee_meta:trainee_id,meta_key,meta_value',
             'user:id,full_name', // trainer
             'follow_up_user:id,full_name'
-        ])->orderBy('created_at', 'desc');
+        ])
+            ->where('current_list', $listId) // Filter by list at query level
+            ->orderBy('created_at', 'desc');
 
         // Apply permission-based filtering
         if ($class->CheckPermissionStatus($class->current_user, $class->permission_collection, 'view_trainees')) {
@@ -24,7 +29,7 @@ trait ViewTraineesHelper
             }
             $data = $class->getCollection($query->get(), $class);
         } elseif ($class->CheckPermissionStatus($class->current_user, $class->permission_collection, 'view_own_trainees') && count($data) === 0) {
-            $query->where('user_id', $class->current_user->id);
+            $query->where('trainer_id', $class->current_user->id);
             if ($request->filled('branch')) {
                 $query->where('branch_id', $class->Branch($request->branch)->id);
             }

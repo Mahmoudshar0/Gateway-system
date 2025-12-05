@@ -107,14 +107,16 @@ export const deletePaymentType = createAsyncThunk(
   }
 );
 
-// get All Preferable Time
+// get All Preferable Time by age_group
 export const fetchPreferableTime = createAsyncThunk(
   "view-waitlist/fetchPreferableTime",
-  async (_, thunkAPI) => {
+  async (age_group, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
+      const params = age_group ? { age_group } : {};
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/dashboard/waitlist/times`
+        `${import.meta.env.VITE_API_URL}/dashboard/waitlist/times`,
+        { params }
       );
       return res.data;
     } catch (error) {
@@ -144,15 +146,15 @@ export const fetchPreferableTimeFiltered = createAsyncThunk(
   }
 );
 
-// create a new preferable time
+// create a new preferable time with age_group
 export const createPreferableTime = createAsyncThunk(
   "view-waitlist/createPreferableTime",
-  async ({ preferable_time }, thunkAPI) => {
+  async ({ preferable_time, age_group }, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/dashboard/waitlist/time/add`,
-        { preferable_time }
+        { preferable_time, age_group }
       );
       return res.data;
     } catch (error) {

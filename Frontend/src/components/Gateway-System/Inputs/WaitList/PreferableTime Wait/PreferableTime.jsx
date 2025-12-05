@@ -1,9 +1,8 @@
 import {
-  clearError,
-  createPreferableTime,
-  deletePreferableTime,
-  fetchPreferableTime,
-  fetchPreferableTimeFiltered
+    clearError,
+    createPreferableTime,
+    deletePreferableTime,
+    fetchPreferableTime
 } from "@src/store/reducers/WaitList/View/ViewSlice";
 import { ToastError, ToastSuccess } from "@src/util/Toast";
 import PropTypes from "prop-types";
@@ -30,22 +29,27 @@ const PreferableTime = ({
   );
 
   useEffect(() => {
-    if (attend_type && age_group) {
-      // Use filtered endpoint when attend_type and age_group are provided
-      dispatch(fetchPreferableTimeFiltered({ attend_type, age_group }));
+    if (age_group) {
+      // Fetch preferable times filtered by age_group only
+      dispatch(fetchPreferableTime(age_group));
     } else {
-      // Fallback to general endpoint
-      dispatch(fetchPreferableTime());
+      // If no age_group, fetch empty list to enforce separation
+      dispatch(fetchPreferableTime(null));
     }
-  }, [dispatch, attend_type, age_group]);
+  }, [dispatch, age_group]);
 
-  // create a new Preferable Time
+  // create a new Preferable Time with age_group
   const createNewPreferableTime = (preferable_time) => {
-    dispatch(createPreferableTime({ preferable_time }))
+    if (!age_group) {
+      ToastError("Age group is required to add a preferable time");
+      return;
+    }
+
+    dispatch(createPreferableTime({ preferable_time, age_group }))
       .unwrap()
       .then(({ message }) => {
         ToastSuccess(message);
-        dispatch(fetchPreferableTime());
+        dispatch(fetchPreferableTime(age_group));
       })
       .catch((error) => {
         ToastError(error.message || error || "Failed to add preferable time");
@@ -59,7 +63,7 @@ const PreferableTime = ({
         .unwrap()
         .then(({ message }) => {
           ToastSuccess(message);
-          dispatch(fetchPreferableTime());
+          dispatch(fetchPreferableTime(age_group));
         })
         .catch((error) => {
           ToastError(error.message || "Failed to delete preferable time");

@@ -14,7 +14,6 @@ class DeletePreferableTime
     use CheckPermission;
 
     protected $current_user;
-    protected $list_name = 'preferable_times';
 
     public function __construct()
     {
@@ -36,9 +35,9 @@ class DeletePreferableTime
             // Start database transaction
             DB::beginTransaction();
 
-            // Find the preferable time by ID and meta_key
+            // Find the preferable time by ID (check both adult and teen meta_keys)
             $gPreferableTime = GeneralMeta::where('id', $id)
-                ->where('meta_key', $this->list_name)
+                ->whereIn('meta_key', ['preferable_times_adult', 'preferable_times_teen'])
                 ->first();
 
             if (!$gPreferableTime) {
