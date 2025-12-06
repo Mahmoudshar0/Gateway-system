@@ -28,7 +28,7 @@ import Inbox from "@src/pages/Inbox/Inbox";
 import ForgetPassword from "@src/pages/Auth/ForgetPassword/ForgetPassword";
 import Reset from "@src/pages/Auth/Reset/Reset";
 import Notification from "@src/pages/Notification/Notification";
-import BranchLogs from "@src/pages/Logs/BranchLogs";
+import BranchLogs from "@src/pages/LogsOperations/BranchLogs";
 
 const Router = createBrowserRouter([
   {
