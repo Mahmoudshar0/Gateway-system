@@ -3,9 +3,9 @@ import { clearSelected } from "@src/store/Hook/clearSelection";
 import { getBranchesAllPages } from "@src/store/reducers/Branches/BrancheSlice";
 import checkPermission from "@src/util/CheckPermission";
 import {
-  MRT_GlobalFilterTextField,
-  MRT_ShowHideColumnsButton,
-  MRT_ToggleGlobalFilterButton,
+    MRT_GlobalFilterTextField,
+    MRT_ShowHideColumnsButton,
+    MRT_ToggleGlobalFilterButton,
 } from "material-react-table";
 import propTypes from "prop-types";
 import { useEffect } from "react";
@@ -169,6 +169,26 @@ const Toolbar = ({ table, type, csvData, bulkDelete, setBranch, totalCount, onRe
                 },
               }}
             />
+            <Button
+              onClick={() => {
+                table.resetColumnFilters();
+                table.resetGlobalFilter();
+                table.resetSorting();
+              }}
+              variant="outlined"
+              size="small"
+              title="Clear All Filters"
+              sx={{
+                color: "var(--bg-button)",
+                borderColor: "var(--bg-button)",
+                "&:hover": {
+                  borderColor: "var(--bg-button)",
+                  backgroundColor: "rgba(var(--bg-button-rgb), 0.1)",
+                },
+              }}
+            >
+              Clear Filters
+            </Button>
             <IconButton title="Export Data">
               <CSVLink data={csvData} filename="data.csv">
                 <BiExport size={30} color="var(--bg-button)" />

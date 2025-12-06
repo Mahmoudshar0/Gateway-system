@@ -67,4 +67,9 @@ class Trainee extends Model
     {
         return $this->belongsTo(User::class, 'follow_up', 'id');
     }
+
+    public function transitions()
+    {
+        return $this->hasMany(Transition::class, 'trainee_id', 'id');
+    }
 }
