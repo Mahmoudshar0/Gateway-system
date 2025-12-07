@@ -6,7 +6,7 @@ import Modals from "@src/components/Gateway-System/Modals/Modals";
 import FormTrainee from "@src/components/forms/WaitList/Trainee/FormTrainee";
 import AdvancedTable from "@src/components/Gateway-System/Table/AdvancedTable";
 import { CloumnsWaitList } from "@src/shared/CloumnsTables";
-import ActionWaitlist from "@src/components/Gateway-System/Table/Actions/ActionWaitlist";
+import ActionWaitlist from "@src/components/Gateway-System/Table/Actions/ActionWaitList";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearError,
