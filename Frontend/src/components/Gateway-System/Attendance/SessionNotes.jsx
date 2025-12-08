@@ -51,7 +51,7 @@ const SessionNotes = ({ row, class_id, type }) => {
 
   return (
     <div className={styles.SessionNotes}>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
         {row.session_notes?.map((session) => (
           <div className={styles.session_list} key={session.id}>
             <CheckBox

@@ -67,12 +67,12 @@
 
 .SessionNotes .session_list:not(:last-of-type) {
   border-right: 1px solid #ddd;
-  padding: 10px;
+  padding: 0 4px;
 }
 
 .SessionNotes .session_list input {
   background-color: transparent;
-  padding: 10px;
+  padding: 4px 2px;
   border: none;
   border-radius: 5px;
   outline: none;
@@ -80,6 +80,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: 0.1s linear;
+  width: 0px; /* Force small width */
 }
 
 .SessionNotes .session_list input.foucs:focus {
